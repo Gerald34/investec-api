@@ -1,20 +1,15 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\User as UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Models\Accounts;
 
-use function PHPUnit\Framework\throwException;
-
 class UserController extends Controller {
-
 
     /**
      * Admin signin
@@ -31,7 +26,7 @@ class UserController extends Controller {
         $credentials = $request->only('email', 'password');
         $token = Auth::attempt($credentials);
         if (!$token) {
-            return response()->json(['error' => 'unauthorized access', 'token' => $token], 401);
+            return response()->json(['error' => true, 'message' => 'unauthorized access', 'token' => $token], 200);
         }
 
         $user = UserModel::where('email', $credentials['email'])->first();
